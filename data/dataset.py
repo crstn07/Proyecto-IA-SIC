@@ -30,6 +30,9 @@ def merge_and_clean_csv(file_paths, output_file):
         # Handle missing values (example: fill with empty string)
         merged_df.fillna('', inplace=True)
 
+        # Convert columns to lowercase
+        merged_df.columns = merged_df.columns.str.lower()
+        
         # Save the merged and cleaned dataframe to a new CSV file
         merged_df.to_csv(output_file, index=False)
         print(f"Successfully merged and cleaned data into {output_file}")
