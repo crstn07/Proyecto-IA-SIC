@@ -67,39 +67,25 @@ def get_recommendations(query, top_n=5):
     top_indices = cosine_sim.argsort()[-top_n:][::-1]
     recommendations = df.iloc[top_indices].copy()
     recommendations['score'] = cosine_sim[top_indices]
-    return recommendations
-
-# ======================
-# Chatbot simple
-# ======================
-def chatbot():
-    print("Ingresa tu consulta en lenguaje natural o escribe 'salir' para terminar.")
-    
-    while True:
-        query = input("\nTu consulta: ")
-        if query.lower() == 'salir':
-            print("¡Hasta luego!")
-            break
-        
-        recommendations = get_recommendations(query, top_n=5)
-        if recommendations.empty:
-            print("Lo siento, no se encontraron resultados para tu consulta.")
-        else:
-            print("\nTe recomendamos las siguientes películas/shows:")
-            for idx, row in recommendations.iterrows():
-                print(f"Título: {row['name']}")
-                print(f"Tipo: {row['tipo']}")
-                print(f"Año de lanzamiento: {row['year']}")
-                print(f"Director: {row['director']}")
-                print(f"Elenco: {row['elenco']}")
-                print(f"País: {row['pais']}")
-                print(f"Clasificación: {row['clasificacion']}")
-                print(f"Duración: {row['duration']}")
-                print(f"Género: {row['genero']}")
-                print(f"Plataforma: {row['plataforma']}")
-                print(f"Sinopsis: {row['sinopsis']}")
-                print("-" * 80)
-    print("Fin del chat.")
+    txt = ""
+    if recommendations.empty:
+        txt = "Lo siento, no se encontraron resultados para tu consulta."
+    else:
+        txt= "\nTe recomendamos las siguientes películas/shows:"
+        for idx, row in recommendations.iterrows():
+            txt += (f"Título: {row['name']}\n")
+            txt += (f"Tipo: {row['tipo']}\n")
+            txt += (f"Año de lanzamiento: {row['year']}\n")
+            txt += (f"Director: {row['director']}\n")
+            txt += (f"Elenco: {row['elenco']}\n")
+            txt += (f"País: {row['pais']}\n")
+            txt += (f"Clasificación: {row['clasificacion']}\n")
+            txt +=(f"Duración: {row['duration']}\n")
+            txt += (f"Género: {row['genero']}\n")
+            txt += (f"Plataforma: {row['plataforma']}\n")
+            txt += (f"Sinopsis: {row['sinopsis']}\n")
+    print(txt)
+    return txt
 
 if __name__ == "__main__":
-    chatbot()
+    get_recommendations("Quiero ver una pelicula de acción")
