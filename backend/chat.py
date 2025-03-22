@@ -69,9 +69,9 @@ def get_recommendations(query, top_n=5):
     recommendations['score'] = cosine_sim[top_indices]
     txt = ""
     if recommendations.empty:
-        txt = "Lo siento, no se encontraron resultados para tu consulta."
+        return "No se encontraron resultados para tu consulta."
     else:
-        txt= "\nTe recomendamos las siguientes películas/shows:"
+        txt= "\nTe recomendamos las siguientes películas/shows:\n"
         for idx, row in recommendations.iterrows():
             txt += (f"Título: {row['name']}\n")
             txt += (f"Tipo: {row['tipo']}\n")
@@ -84,8 +84,5 @@ def get_recommendations(query, top_n=5):
             txt += (f"Género: {row['genero']}\n")
             txt += (f"Plataforma: {row['plataforma']}\n")
             txt += (f"Sinopsis: {row['sinopsis']}\n")
-    print(txt)
+            txt += "-"*90 + "\n"
     return txt
-
-if __name__ == "__main__":
-    get_recommendations("Quiero ver una pelicula de acción")
