@@ -1,7 +1,8 @@
+#pip install -r requirements.txt
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from chat import get_recommendations
-print("Hola mundo")
+
 app = Flask(__name__)
 CORS(app)
 
@@ -12,7 +13,6 @@ def prueba():
 @app.route('/chat', methods=['POST'])
 def chat():
     try:
-        # {"query": "Quiero ver una película de acción"}
         query = request.json['query']
         recomendaciones = get_recommendations(query)
         return jsonify({"recomendaciones": recomendaciones})

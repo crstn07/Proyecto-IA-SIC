@@ -57,10 +57,45 @@ const ChatComponent = () => {
           <div className="chat-box">
             {messages.map((msg, index) => (
               <div key={index} className={`chat-message ${msg.sender}`}>
-                 <ul>
-                  {msg.text.split('\n').map((line, index) => (
-                    line.trim() && <li key={index}>{line}</li> // Elimina líneas vacías y crea elementos <li>
-                  ))}
+                {msg.text.includes("Te recomendamos las siguientes películas/shows:") && (
+                  <p>Te recomendamos las siguientes películas/shows:</p> // Mostrar fuera del <ul>
+                )}
+                <ul>
+                  {msg.text.split('\n').map((line, index) => {
+                    if (line.trim() === "------------------------------------------------------------------------------------------") {
+                      return (
+                        <React.Fragment key={index}>
+                          {line}
+                        </React.Fragment>
+                      );
+                    }
+                    return (
+                      line.trim() &&
+                      line !== "Te recomendamos las siguientes películas/shows:" && ( // Excluir del <ul>
+                        <li key={index}>
+                        {line.includes("https") ? (
+                          <>
+                            <strong>{line.split(':')[0]}:</strong>{' '}
+                            <a href={line.includes("https") ? line.split(':').slice(1).join(':').trim() : ''} target="_blank" rel="noopener noreferrer">
+                              {line.split(':').slice(1).join(':').trim()}
+                            </a>
+                          </>
+                        ) : (
+                          <>
+                            {line.includes(':') ? (
+                              <>
+                                <strong>{line.split(':')[0]}:</strong>{' '}
+                                {line.split(':').slice(1).join(':').trim()}
+                              </>
+                            ) : (
+                              line
+                            )}
+                          </>
+                        )}
+                      </li>
+                      )
+                    );
+                  })}
                 </ul>
               </div>
             ))}

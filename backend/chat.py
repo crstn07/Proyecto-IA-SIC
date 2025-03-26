@@ -1,4 +1,3 @@
-#pip install -r requirements.txt
 import pandas as pd
 import spacy
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -21,11 +20,11 @@ def preprocess_text(text):
 # ======================
 # CARGA Y PREPROCESAMIENTO DEL DATASET
 # ======================
-df = pd.read_csv('../data/dataset.csv')
+df = pd.read_csv('../data/dataset2.csv')
 
 #convertir la columna year a string
 df['year'] = df['year'].astype(str)
-df.fillna('', inplace=True)
+df.fillna('N/A', inplace=True)
 
 # Combinar información relevante y preprocesarla
 df['combined'] = (
@@ -77,12 +76,13 @@ def get_recommendations(query, top_n=5):
             txt += (f"Tipo: {row['tipo']}\n")
             txt += (f"Año de lanzamiento: {row['year']}\n")
             txt += (f"Director: {row['director']}\n")
-            txt += (f"Elenco: {row['elenco']}\n")
+            txt += (f"Elenco: {row['elenco']}\n")        
             txt += (f"País: {row['pais']}\n")
             txt += (f"Clasificación: {row['clasificacion']}\n")
-            txt +=(f"Duración: {row['duration']}\n")
+            txt += (f"Duración: {row['duration']}\n")
             txt += (f"Género: {row['genero']}\n")
             txt += (f"Plataforma: {row['plataforma']}\n")
             txt += (f"Sinopsis: {row['sinopsis']}\n")
+            txt += (f"Enlace: {row['link']}\n")
             txt += "-"*90 + "\n"
     return txt
